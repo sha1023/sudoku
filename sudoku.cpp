@@ -28,7 +28,7 @@ void print(int* x, int size){
 vector< vector<int> > populate() {
     //insert your sudoku here.
     int y[9][9] = {
-		{8, 0, 0, 0, 0, 0, 2, 0, 7},
+        {8, 0, 0, 0, 0, 0, 2, 0, 7},
         {0, 0, 1, 8, 0, 2, 5, 0, 0},
         {0, 2, 0, 0, 7, 0, 0, 6, 8},
         //
