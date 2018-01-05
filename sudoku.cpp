@@ -57,7 +57,6 @@ bool is_not_dup(int num, unordered_set<int> &seen){
     return true;
 }
 
-
 bool invalid(vector< vector<int> > &board){
     unordered_set< int > row;
     unordered_set< int > column;
@@ -82,10 +81,10 @@ void append_all(vector < vector< vector <int> > > &prefix, vector< vector< vecto
     }
 }
 
-vector< vector< vector< int > > > guess_and_check(vector< vector<int> > &board, int *count) {
-    *count += 1;
-    if(*count%10000 == 0) {
-        cout << *count;
+vector< vector< vector< int > > > guess_and_check(vector< vector<int> > &board, int &count) {
+    count += 1;
+    if(count%10000 == 0) {
+        cout << count;
         cout << "\n";
     }
     vector< vector< vector< int > > > valid_guesses;
@@ -117,7 +116,7 @@ int main() {
     print(board);
 
     int count = 0;
-    vector< vector< vector< int > > > solutions = guess_and_check(board, &count);
+    vector< vector< vector< int > > > solutions = guess_and_check(board, count);
     cout << "computed " << solutions.size() << " solution(s), after " << count << " guesses:\n\n";
     for(vector< vector< vector< int > > >::size_type i=0; i<solutions.size(); i++){
         print(solutions[i]);
