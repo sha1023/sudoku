@@ -6,13 +6,14 @@ syntax: "python sudoku.py" or "go run sudoku.go" or "g++ sudoku.cpp && ./a.out"
 
 On my machine the go solver is 34 times faster than the python solver, and about as legible.
 
-`sudoku_array.cpp` is the fastest of the c++ solvers. It's currently twice as fast as `sudoku.cpp` and still half as fast as the go solver.
+Alright after compiling with optimizations c++ is the clear winner, as I'd expect.
 
 Time measurements were made using:
+
 ```
 time python sudoku.py
-g++ sudoku.cpp && time ./a.out
-g++ sudoku_array.cpp && time ./a.out
-time go run sudoku.go
+go build sudoku.go && time ./sudoku
+g++ -O sudoku.cpp && time ./a.out
+g++ -O sudoku_array.cpp && time ./a.out
 ```
 
