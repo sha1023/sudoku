@@ -1,6 +1,5 @@
 # include <iostream>
 # include <vector>
-# include <unordered_set>
 using namespace std;
 
 void print(vector<int> &v){
@@ -32,8 +31,10 @@ vector< vector<int> > populate() {
         {0, 0, 1, 8, 0, 2, 5, 0, 0},
         {0, 2, 0, 0, 7, 0, 0, 6, 8},
         //
-        {0, 6, 8, 0, 5, 0, 0, 2, 0},
-        {0, 1, 9, 0, 0, 8, 7, 4, 0},
+        //{0, 6, 8, 0, 5, 0, 0, 2, 0},
+        {0, 6, 8, 0, 0, 0, 0, 2, 0},
+        //{0, 1, 9, 0, 0, 8, 7, 4, 0},
+        {0, 0, 0, 0, 0, 0, 7, 4, 0},
         {0, 0, 0, 0, 0, 0, 0, 8, 0},
         //
         {0, 8, 0, 4, 0, 1, 0, 0, 2},
@@ -47,24 +48,30 @@ vector< vector<int> > populate() {
     return board;
 }
 
-bool is_not_dup(int num, unordered_set<int> &seen){
+void clear(bool *seen) {
+    for(int i=0;i<9;i++){
+        seen[i] = false;
+    }
+}
+
+bool is_not_dup(int num, bool *seen){
     if(num != 0){
-        if(seen.find(num) != seen.end()){
+        if(seen[num - 1]){
             return false;
         }
-        seen.insert(num);
+        seen[num - 1] = true;
     }
     return true;
 }
 
 bool invalid(vector< vector<int> > &board){
-    unordered_set< int > row;
-    unordered_set< int > column;
-    unordered_set< int > box;
+    bool row[9];
+    bool column[9];
+    bool box[9];
     for(vector< vector< int > >::size_type i=0; i<board.size(); i++) {
-        row.clear();
-        column.clear();
-        box.clear();
+        clear(row);
+        clear(column);
+        clear(box);
         for(vector< int >::size_type j=0; j<board[i].size(); j++) {
             bool result = is_not_dup(board[i][j], row) && is_not_dup(board[j][i], column) && is_not_dup(board[3*(i/3)+j/3][3*(i%3)+j%3], box);
             if(!result){
@@ -84,8 +91,7 @@ void append_all(vector < vector< vector <int> > > &prefix, vector< vector< vecto
 vector< vector< vector< int > > > guess_and_check(vector< vector<int> > &board, int &count) {
     count += 1;
     if(count%10000 == 0) {
-        cout << count;
-        cout << "\n";
+        cout << count << "\n";
     }
     vector< vector< vector< int > > > valid_guesses;
     if(invalid(board)){
@@ -118,8 +124,8 @@ int main() {
     int count = 0;
     vector< vector< vector< int > > > solutions = guess_and_check(board, count);
     cout << "computed " << solutions.size() << " solution(s), after " << count << " guesses:\n\n";
-    for(vector< vector< vector< int > > >::size_type i=0; i<solutions.size(); i++){
-        print(solutions[i]);
-    }
+    //for(vector< vector< vector< int > > >::size_type i=0; i<solutions.size(); i++){
+    //    print(solutions[i]);
+    //}
 }
 

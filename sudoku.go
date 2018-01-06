@@ -11,8 +11,10 @@ func Populate() [][]int {
 		[]int{0, 0, 1, 8, 0, 2, 5, 0, 0},
 		[]int{0, 2, 0, 0, 7, 0, 0, 6, 8},
 
-		[]int{0, 6, 8, 0, 5, 0, 0, 2, 0},
-		[]int{0, 1, 9, 0, 0, 8, 7, 4, 0},
+		//[]int{0, 6, 8, 0, 5, 0, 0, 2, 0},
+		[]int{0, 6, 8, 0, 0, 0, 0, 2, 0},
+		//[]int{0, 1, 9, 0, 0, 8, 7, 4, 0},
+		[]int{0, 0, 0, 0, 0, 0, 7, 4, 0},
 		[]int{0, 0, 0, 0, 0, 0, 0, 8, 0},
 
 		[]int{0, 8, 0, 4, 0, 1, 0, 0, 2},
@@ -20,25 +22,30 @@ func Populate() [][]int {
 		[]int{9, 0, 0, 2, 8, 0, 0, 0, 3}}
 }
 
-func IsNotDup(num int, seen map[int]bool) bool {
+func IsNotDup(num int, seen []bool) bool {
 	if num != 0 {
-		_, contains := seen[num]
-		if contains {
+		if seen[num - 1] {
 			return false
 		}
-		seen[num] = true
+		seen[num - 1] = true
 	}
 	return true
 }
 
+func Clear(seen []bool) {
+    for i := range seen {
+        seen[i] = false;
+    }
+}
+
 func Invalid(board [][]int) bool {
-	row := map[int]bool{}
-	column := map[int]bool{}
-	box := map[int]bool{}
+    row := []bool {false, false, false, false, false, false, false, false, false};
+    column := []bool {false, false, false, false, false, false, false, false, false};
+    box := []bool {false, false, false, false, false, false, false, false, false};
 	for i := range board {
-		row = map[int]bool{}
-		column = map[int]bool{}
-		box = map[int]bool{}
+		Clear(row)
+		Clear(column)
+		Clear(box)
 		for j := range board {
 			result := IsNotDup(board[i][j], row) && IsNotDup(board[j][i], column) && IsNotDup(board[3*(i/3)+j/3][3*(i%3)+j%3], box)
 			if !result {
@@ -112,8 +119,8 @@ func main() {
 	count := 0
 	solutions := GuessAndCheck(board, &count)
 	fmt.Println("computed", len(solutions), "solution(s), after", count, "guesses")
-	for _, solution := range solutions {
-		fmt.Println("")
-		PrettyPrint(solution)
-	}
+	//for _, solution := range solutions {
+	//	fmt.Println("")
+	//	PrettyPrint(solution)
+	//}
 }
