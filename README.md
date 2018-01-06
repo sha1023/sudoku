@@ -6,7 +6,7 @@ syntax: "python sudoku.py" or "go run sudoku.go" or "g++ sudoku.cpp && ./a.out"
 
 On my machine the go solver is 34 times faster than the python solver, and about as legible.
 
-Alright after compiling with optimizations c++ is the clear winner, as I'd expect.
+After compiling with optimizations, c++ is the clear winner, as I'd expect.
 
 Time measurements were made using:
 
