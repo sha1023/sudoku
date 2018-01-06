@@ -77,9 +77,9 @@ def main():
     count = [0]
     solutions = guess_and_check(board, count)
     print "computed",  len(solutions), "solution(s), after", count[0], "guesses"
-    for solution in solutions:
-        print ""
-        pretty_print(solution)
+    #for solution in solutions:
+    #    print ""
+    #    pretty_print(solution)
 
 if __name__ == "__main__":
     doctest.testmod()
