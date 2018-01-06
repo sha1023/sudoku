@@ -9,8 +9,10 @@ On my machine the go solver is 34 times faster than the python solver, and about
 `sudoku_array.cpp` is the fastest of the c++ solvers. It's currently twice as fast as `sudoku.cpp` and still half as fast as the go solver.
 
 Time measurements were made using:
-`time python sudoku.py`
-`g++ sudoku.cpp && time ./a.out`
-`g++ sudoku_array.cpp && time ./a.out`
-`time go run sudoku.go`
+```
+time python sudoku.py
+g++ sudoku.cpp && time ./a.out
+g++ sudoku_array.cpp && time ./a.out
+time go run sudoku.go
+```
 
