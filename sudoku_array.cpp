@@ -114,6 +114,7 @@ int main() {
     int count = 0;
     vector< vector< vector< int > > > solutions;
     guess_and_check(solutions, board, count);
+    cout << "\n";
     cout << "computed " << solutions.size() << " solution(s), after " << count << " guesses:\n\n";
     //for(vector< vector< vector< int > > >::size_type i=0; i<solutions.size(); i++){
     //    print(solutions[i]);
