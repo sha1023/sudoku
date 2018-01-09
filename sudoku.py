@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from __future__ import print_function
 import copy
 import doctest
 
@@ -43,7 +44,7 @@ def invalid(board):
         column = set()
         box = set()
         for j in range(len(board)):
-            result = is_not_dup(board[i][j], row) and is_not_dup(board[j][i], column) and is_not_dup(board[3*(i/3) + j/3][3*(i%3)+j%3], box)
+            result = is_not_dup(board[i][j], row) and is_not_dup(board[j][i], column) and is_not_dup(board[3*(i//3) + j//3][3*(i%3)+j%3], box)
             if not result:
                 return True
     return False
@@ -51,7 +52,7 @@ def invalid(board):
 def guess_and_check(board, count):
     count[0] += 1
     if count[0] % 10000 == 0:
-        print "count:", count
+        print("count:", count)
     if invalid(board):
         return []
     valid_guesses = []
@@ -68,17 +69,17 @@ def guess_and_check(board, count):
 
 def pretty_print(board):
     for row in board:
-        print row
+        print(row)
 
 def main():
     board = populate()
     pretty_print(board)
-    print ""
+    print("")
     count = [0]
     solutions = guess_and_check(board, count)
-    print "computed",  len(solutions), "solution(s), after", count[0], "guesses"
+    print("computed",  len(solutions), "solution(s), after", count[0], "guesses")
     #for solution in solutions:
-    #    print ""
+    #    print("")
     #    pretty_print(solution)
 
 if __name__ == "__main__":
