@@ -1,18 +1,19 @@
-fn populate() -> [[u8; 9]; 9] {
-    // insert your sudoku here
-    [[8,0,0, 0,0,0, 2,0,7],
-     [0,0,1, 8,0,2, 5,0,0],
-     [0,2,0, 0,7,0, 0,6,8],
+use std::env;
+use std::fs::File;
+use std::io::{BufRead, BufReader};
 
-     // [0,6,8, 0,5,0, 0,2,0],
-     [0,6,8, 0,0,0, 0,2,0],
-     // [0,1,9, 0,0,8, 7,4,0],
-     [0,0,0, 0,0,0, 7,4,0],
-     [0,0,0, 0,0,0, 0,8,0],
-
-     [0,8,0, 4,0,1, 0,0,2],
-     [1,0,2, 0,3,0, 8,0,0],
-     [9,0,0, 2,8,0, 0,0,3]]
+fn populate(file_name: &str) -> [[u8; 9]; 9] {
+    let file = File::open(file_name).unwrap();
+    let reader = BufReader::new(file);
+    let mut board: [[u8; 9]; 9] = [[0;9];9];
+    for (i, line) in reader.lines().enumerate() {
+        let line_str = line.unwrap();
+        let elements = line_str.split(",");
+        for (j, element) in elements.enumerate() {
+            board[i][j] = element.parse::<u8>().unwrap()
+        }
+    }
+    board
 }
 
 fn is_not_dup(num: usize, seen: &mut [bool]) -> bool {
@@ -81,7 +82,12 @@ fn pretty_print(board: &[[u8; 9]; 9]) {
 }
 
 fn main() {
-    let mut board = populate();
+    let args: Vec<_> = env::args().collect();
+    if args.len() < 2 {
+        println!("please supply an input file");
+        return;
+    }
+    let mut board = populate(&args[1]);
     pretty_print(&board);
     println!("");
     let mut count = 0;

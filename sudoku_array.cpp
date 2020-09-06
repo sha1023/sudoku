@@ -1,26 +1,23 @@
 # include <iostream>
 # include <vector>
+# include <fstream>
+# include <sstream>
+# include <string>
 using namespace std;
 
-void populate(int board[9][9]){
-    int y[9][9] = {
-        {8, 0, 0, 0, 0, 0, 2, 0, 7},
-        {0, 0, 1, 8, 0, 2, 5, 0, 0},
-        {0, 2, 0, 0, 7, 0, 0, 6, 8},
-        //
-        //{0, 6, 8, 0, 5, 0, 0, 2, 0},
-        {0, 6, 8, 0, 0, 0, 0, 2, 0},
-        //{0, 1, 9, 0, 0, 8, 7, 4, 0},
-        {0, 0, 0, 0, 0, 0, 7, 4, 0},
-        {0, 0, 0, 0, 0, 0, 0, 8, 0},
-        //
-        {0, 8, 0, 4, 0, 1, 0, 0, 2},
-        {1, 0, 2, 0, 3, 0, 8, 0, 0},
-        {9, 0, 0, 2, 8, 0, 0, 0, 3}};
-    for(int i=0;i<9;i++){
-        for(int j=0;j<9;j++){
-            board[i][j] = y[i][j];
+void populate(int board[9][9], char* input_file) {
+    ifstream infile(input_file);
+    string line;
+    int i = 0;
+    while(getline(infile, line)) {
+        string s;
+        stringstream ss(line);
+        int j = 0;
+        while(getline(ss, s, ',')) {
+            board[i][j] = stoi(s);
+            j++;
         }
+        i++;
     }
 }
 
@@ -104,9 +101,13 @@ void print(int x[9][9]){
     }
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+    if(argc < 2) {
+        cout << "please provide input file";
+        return -1;
+    }
     int board[9][9];
-    populate(board);
+    populate(board, argv[1]);
 
     cout << "Solving:\n\n";
     print(board);
