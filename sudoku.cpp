@@ -1,5 +1,9 @@
 # include <iostream>
 # include <vector>
+# include <fstream>
+# include <sstream>
+# include <string>
+
 using namespace std;
 
 void print(vector<int> &v){
@@ -24,22 +28,21 @@ void print(int* x, int size){
     }
 }
 
-vector< vector<int> > populate() {
-    //insert your sudoku here.
-    int y[9][9] = {
-        {8, 0, 0, 0, 0, 0, 2, 0, 7},
-        {0, 0, 1, 8, 0, 2, 5, 0, 0},
-        {0, 2, 0, 0, 7, 0, 0, 6, 8},
-        //
-        //{0, 6, 8, 0, 5, 0, 0, 2, 0},
-        {0, 6, 8, 0, 0, 0, 0, 2, 0},
-        //{0, 1, 9, 0, 0, 8, 7, 4, 0},
-        {0, 0, 0, 0, 0, 0, 7, 4, 0},
-        {0, 0, 0, 0, 0, 0, 0, 8, 0},
-        //
-        {0, 8, 0, 4, 0, 1, 0, 0, 2},
-        {1, 0, 2, 0, 3, 0, 8, 0, 0},
-        {9, 0, 0, 2, 8, 0, 0, 0, 3}};
+vector< vector<int> > populate(char* input_file) {
+    ifstream infile(input_file);
+    string line;
+    int i = 0;
+    int y[9][9];
+    while(getline(infile, line)) {
+        string s;
+        stringstream ss(line);
+        int j = 0;
+        while(getline(ss, s, ',')) {
+            y[i][j] = stoi(s);
+            j++;
+        }
+        i++;
+    }
     vector< vector<int> > board;
     for(int i=0; i<9; i++){
         vector<int> temp (y[i], y[i] + sizeof(y[i])/sizeof(y[i][0]));
@@ -115,8 +118,12 @@ vector< vector< vector< int > > > guess_and_check(vector< vector<int> > &board, 
     return valid_guesses;
 }
 
-int main() {
-    vector< vector<int> > board = populate();
+int main(int argc, char *argv[]) {
+    if(argc < 2) {
+        cout << "please provide input file";
+        return -1;
+    }
+    vector< vector<int> > board = populate(argv[1]);
 
     cout << "Solving:\n\n";
     print(board);

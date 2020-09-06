@@ -25,15 +25,15 @@ rustc -O sudoku.rs && time ./sudoku | grep -v "^count\|^[0-9][0-9]\+"
 echo "---"
 echo ""
 echo c++ without optimization flags:
-g++ sudoku.cpp && time ./a.out | grep -v "^count\|^[0-9][0-9]\+"
+g++ sudoku.cpp && time ./a.out ${InputFile} | grep -v "^count\|^[0-9][0-9]\+"
 
 echo "---"
 echo ""
 echo c++:
-g++ -O sudoku.cpp && time ./a.out | grep -v "^count\|^[0-9][0-9]\+"
+g++ -O sudoku.cpp && time ./a.out ${InputFile} | grep -v "^count\|^[0-9][0-9]\+"
 
 echo "---"
 echo ""
 echo c++ array version:
-g++ -O sudoku_array.cpp && time ./a.out  | grep -v "^count\|^[0-9][0-9]\+"
+g++ -O sudoku_array.cpp && time ./a.out ${InputFile} | grep -v "^count\|^[0-9][0-9]\+"
 
