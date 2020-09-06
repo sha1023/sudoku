@@ -1,14 +1,16 @@
 #!/bin/bash
 
+InputFile=complex.csv
+PythonInputFile=simple.csv
 echo "---"
 echo ""
 echo "python (with less complex input to avoid slowing things down too much.):"
-time python sudoku.py simple.csv | grep -v "^count\|^[0-9][0-9]\+"
+time python sudoku.py ${PythonInputFile} | grep -v "^count\|^[0-9][0-9]\+"
 
 echo "---"
 echo ""
 echo golang:
-go build sudoku.go && time ./sudoku | grep -v "^count\|^[0-9][0-9]\+"
+go build sudoku.go && time ./sudoku ${InputFile} | grep -v "^count\|^[0-9][0-9]\+"
 
 echo "---"
 echo ""

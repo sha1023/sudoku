@@ -2,24 +2,32 @@ package main
 
 import (
 	"fmt"
+    "bufio"
+    "os"
+    "strings"
+    "strconv"
 )
 
-func Populate() [][]int {
-	//insert your sudoku here.
-	return [][]int{
-		[]int{8, 0, 0, 0, 0, 0, 2, 0, 7},
-		[]int{0, 0, 1, 8, 0, 2, 5, 0, 0},
-		[]int{0, 2, 0, 0, 7, 0, 0, 6, 8},
-
-		//[]int{0, 6, 8, 0, 5, 0, 0, 2, 0},
-		[]int{0, 6, 8, 0, 0, 0, 0, 2, 0},
-		//[]int{0, 1, 9, 0, 0, 8, 7, 4, 0},
-		[]int{0, 0, 0, 0, 0, 0, 7, 4, 0},
-		[]int{0, 0, 0, 0, 0, 0, 0, 8, 0},
-
-		[]int{0, 8, 0, 4, 0, 1, 0, 0, 2},
-		[]int{1, 0, 2, 0, 3, 0, 8, 0, 0},
-		[]int{9, 0, 0, 2, 8, 0, 0, 0, 3}}
+func Populate(fileName string) [][]int {
+    inputFile, err := os.Open(fileName)
+    if err != nil {
+        panic(err)
+    }
+    defer inputFile.Close()
+    inputBoard := [][]int{}
+    scanner := bufio.NewScanner(inputFile)
+    for scanner.Scan() {
+        inputLine := []int{}
+        for _, element := range(strings.Split(scanner.Text(), ",")) {
+            num, err := strconv.Atoi(element)
+            if err != nil {
+                panic(err)
+            }
+            inputLine = append(inputLine, num)
+        }
+        inputBoard = append(inputBoard, inputLine)
+    }
+	return inputBoard
 }
 
 func IsNotDup(num int, seen []bool) bool {
@@ -113,10 +121,11 @@ func PrettyPrint(board [][]int) {
 }
 
 func main() {
-	board := Populate()
+	board := Populate(os.Args[1])
 	PrettyPrint(board)
 	fmt.Println("")
 	count := 0
+    fmt.Println("all is well:")
 	solutions := GuessAndCheck(board, &count)
 	fmt.Println("computed", len(solutions), "solution(s), after", count, "guesses")
 	//for _, solution := range solutions {
