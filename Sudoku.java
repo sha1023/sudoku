@@ -107,9 +107,6 @@ public class Sudoku {
         int count[] = new int[] {0};
         List<int[][]> solutions = guessAndCheck(board, count);
         System.out.println("computed " + solutions.size() + " solution(s), after " + count[0] + " guesses:\n\n");
-        //for(vector< vector< vector< int > > >::size_type i=0; i<solutions.size(); i++){
-        //    print(solutions[i]);
-        //}
     }
 }
 
