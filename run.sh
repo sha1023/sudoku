@@ -3,7 +3,7 @@
 echo "---"
 echo ""
 echo "python (with less complex input to avoid slowing things down too much.):"
-time python sudoku.py | grep -v "^count\|^[0-9][0-9]\+"
+time python sudoku.py simple.csv | grep -v "^count\|^[0-9][0-9]\+"
 
 echo "---"
 echo ""

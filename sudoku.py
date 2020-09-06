@@ -1,22 +1,14 @@
 #!/usr/bin/python
-from __future__ import print_function
 import copy
 import doctest
+import sys
 
-def populate():
-    #insert your sudoku here.
-    return [[8,0,0, 0,0,0, 2,0,7],
-            [0,0,1, 8,0,2, 5,0,0],
-            [0,2,0, 0,7,0, 0,6,8],
-
-            #[0,6,8, 0,5,0, 0,2,0],
-            [0,6,8, 0,0,0, 0,2,0],
-            [0,1,9, 0,0,8, 7,4,0],
-            [0,0,0, 0,0,0, 0,8,0],
-
-            [0,8,0, 4,0,1, 0,0,2],
-            [1,0,2, 0,3,0, 8,0,0],
-            [9,0,0, 2,8,0, 0,0,3]]
+def populate(file_name):
+    input_board = list()
+    with open(file_name, 'r') as input_file:
+        for line in input_file:
+            input_board.append([int(element) for element in line.split(',')])
+    return input_board
 
 def is_not_dup(num, seen):
     if num != 0:
@@ -72,7 +64,8 @@ def pretty_print(board):
         print(row)
 
 def main():
-    board = populate()
+    file_name = sys.argv[1]
+    board = populate(file_name)
     pretty_print(board)
     print("")
     count = [0]
