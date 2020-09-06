@@ -15,7 +15,7 @@ go build sudoku.go && time ./sudoku ${InputFile} | grep -v "^count\|^[0-9][0-9]\
 echo "---"
 echo ""
 echo java:
-javac Sudoku.java && time java Sudoku | grep -v "^count\|^[0-9][0-9]\+"
+javac Sudoku.java && time java Sudoku ${InputFile} | grep -v "^count\|^[0-9][0-9]\+"
 
 echo "---"
 echo ""

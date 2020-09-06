@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.io.*;
 
 public class Sudoku {
     public static void print(int[] array){
@@ -16,21 +17,19 @@ public class Sudoku {
         }
     }
 
-    private static int[][] populate(){
-        return new int[][] {
-            {8, 0, 0, 0, 0, 0, 2, 0, 7},
-            {0, 0, 1, 8, 0, 2, 5, 0, 0},
-            {0, 2, 0, 0, 7, 0, 0, 6, 8},
-            //
-            //{0, 6, 8, 0, 5, 0, 0, 2, 0},
-            {0, 6, 8, 0, 0, 0, 0, 2, 0},
-            //{0, 1, 9, 0, 0, 8, 7, 4, 0},
-            {0, 0, 0, 0, 0, 0, 7, 4, 0},
-            {0, 0, 0, 0, 0, 0, 0, 8, 0},
-            //
-            {0, 8, 0, 4, 0, 1, 0, 0, 2},
-            {1, 0, 2, 0, 3, 0, 8, 0, 0},
-            {9, 0, 0, 2, 8, 0, 0, 0, 3}};
+    private static int[][] populate(String fileName) throws Exception {
+        String line;
+        BufferedReader fileReader = new BufferedReader(new FileReader(fileName));
+        int[][] inputBoard = new int[9][9];
+        int i = 0;
+        while((line=fileReader.readLine())!=null){
+            String[] lineElements = line.split(",");
+            for(int j = 0; j < lineElements.length; j++) {
+                inputBoard[i][j] = Integer.parseInt(lineElements[j]);
+            }
+            i++;
+        }
+        return inputBoard;
     }
 
     private static void clear(boolean[] seen){
@@ -94,7 +93,14 @@ public class Sudoku {
     }
 
     public static void main(String args[]) {
-        int[][] board = populate();
+        int[][] board;
+        try {
+            board = populate(args[0]);
+        }
+        catch(Exception exc) {
+            System.out.println(exc);
+            return;
+        }
         System.out.println("Solving:\n");
         print(board);
 
